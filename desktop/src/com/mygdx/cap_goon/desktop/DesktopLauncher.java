@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.width = 1600;
 		config.height = 900;
 		config.forceExit = false;
+		config.title = "Captain Goon";
 		new LwjglApplication(new CaptainGoon(), config);
 	}
 }

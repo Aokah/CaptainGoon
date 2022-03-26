@@ -29,5 +29,6 @@ public class CaptainGoon extends Game {
 	public void dispose () {
 		batch.dispose();
 		font.dispose();
+		buttonSkin.dispose();
 	}
 }

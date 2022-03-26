@@ -25,20 +25,20 @@ public class SmallEnemyShip extends EnemyShip{
 
         setImage(new Texture(Gdx.files.internal("sprites/ships/roundysh_small.png")));
         if (pos == 1){
-            getPosition().x = Gdx.graphics.getWidth()/4 + 35 - 100/2;
+            getPosition().x = Gdx.graphics.getWidth()/4 + 35 - getImage().getWidth()/2;
             setRayon(Gdx.graphics.getWidth()/4);
             incr = 0;
         }
         else if (pos == 2){
-            getPosition().x = (float) (Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3.5) - 100/2;
+            getPosition().x = (float) (Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3.5) - getImage().getWidth()/2;
             setRayon(Gdx.graphics.getWidth()/4);
             incr = 90;
         }
         firstX = getPosition().x;
-        getPosition().y = Gdx.graphics.getHeight() - 150 - 100;
-        getPosition().width = 100 * 9/10;
-        getPosition().height = 100 * 9/10;
-        wShipAmmos = new Array<WShipAmmo>();
+        getPosition().y = Gdx.graphics.getHeight() - 150 - getImage().getWidth(); // le 150 correspond a la hauteur du gros ship ennemi
+        getPosition().width = getImage().getWidth() * 9/10;
+        getPosition().height = getImage().getHeight() * 9/10;
+        wShipAmmos = new Array<>();
     }
 
     public void spawnEnemyAmmos(){
@@ -46,8 +46,8 @@ public class SmallEnemyShip extends EnemyShip{
             WShipAmmo wShipAmmo = new WShipAmmo();
             wShipAmmo.getPosition().x = getPosition().x + 150 / 2;
             wShipAmmo.getPosition().y = getPosition().y + 150 / 2;
-            wShipAmmo.getPosition().width = 40;
-            wShipAmmo.getPosition().height = 69;
+            wShipAmmo.getPosition().width = getImage().getWidth() * 8/10;
+            wShipAmmo.getPosition().height = getImage().getHeight() * 8/10;
             wShipAmmos.add(wShipAmmo);
         }
     }
@@ -56,7 +56,7 @@ public class SmallEnemyShip extends EnemyShip{
         incr += 0.02 %(2*Math.PI);
         if(isAlive()){
             getPosition().x = (float) (Math.sin(incr) * rayon) + firstX;
-            getPosition().y = (float) (Math.cos(incr) * Gdx.graphics.getHeight()/10) + Gdx.graphics.getHeight() -150 -100;
+            getPosition().y = (float) (Math.cos(incr) * Gdx.graphics.getHeight()/10) + Gdx.graphics.getHeight() -150 - getImage().getWidth(); // idem que pour la position en y pour le 150 ici
         }
     }
 }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,16 +31,9 @@ public class GameScreen implements Screen{
     TextButton mute;
 
     HeroShip heroShip;
-    Rectangle heroRectangle;
-
     BigEnemyShip bigEnemyShip;
-    Rectangle bigEnemyRectangle;
-
     SmallEnemyShip small1;
-    Rectangle small1Rectangle;
-
     SmallEnemyShip small2;
-    Rectangle small2Rectangle;
 
     Array<EnemyShip> enemyShips;
 
@@ -80,16 +72,9 @@ public class GameScreen implements Screen{
         background = new Texture(Gdx.files.internal("backgrounds/Planets.jpg"));
 
         heroShip = new HeroShip();
-        heroRectangle = heroShip.getPosition();
-
         bigEnemyShip = new BigEnemyShip();
-        bigEnemyRectangle = bigEnemyShip.getPosition();
-
         small1 = new SmallEnemyShip(1);
-        small1Rectangle = small1.getPosition();
-
         small2 = new SmallEnemyShip(2);
-        small2Rectangle = small2.getPosition();
 
         enemyShips = new Array<>();
         enemyShips.add(small1, small2, bigEnemyShip);
@@ -100,7 +85,7 @@ public class GameScreen implements Screen{
         wShipAmmos1 = small1.getAmmos();
         wShipAmmos2 = small2.getAmmos();
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("audio/supercopter-jdg-pendant-plus-de-10-minutes.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("audio/2021-08-17_-_8_Bit_Nostalgia_-_www.FesliyanStudios.com.mp3"));
         music.setVolume(0.1f);
         mute = new TextButton("Mute",game.buttonSkin);
 
@@ -141,8 +126,6 @@ public class GameScreen implements Screen{
                     small2.spawnEnemyAmmos();
                 }
 
-                if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) System.out.println(Gdx.input.getX());
-
                 for(EnemyShip ship : enemyShips){
                     ship.travelling();
                     ship.enemyShoot(ship.getAmmos(), heroShip, game.batch);
@@ -175,7 +158,7 @@ public class GameScreen implements Screen{
         game.font.draw(game.batch, "YOU WON THE GAME !",  (Gdx.graphics.getWidth()/2)-100, Gdx.graphics.getHeight()/2);
         game.batch.end();
 
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
@@ -197,11 +180,11 @@ public class GameScreen implements Screen{
     }
 
     private void hudDraw(){
-        game.batch.draw(heroShip.getImage(), 0, 0, 100 * 7/10, 136 * 7/10);
+        game.batch.draw(heroShip.getImage(), 0, 0, heroShip.getImage().getWidth() * 7/10, heroShip.getImage().getHeight() * 7/10);
         game.font.getData().setScale(2f,2f);
         game.font.draw(game.batch, heroShip.getLife() + " %", 90, 75);
         mute.draw(game.batch, 1);
-        game.batch.draw(bigEnemyShip.getImage(), (float)(Gdx.graphics.getWidth()-100), 0, 150 * 7/10, 150 * 7/10);
+        game.batch.draw(bigEnemyShip.getImage(), (float)(Gdx.graphics.getWidth()-100), 0, bigEnemyShip.getImage().getWidth() * 7/10, bigEnemyShip.getImage().getHeight() * 7/10);
         game.font.draw(game.batch, bigEnemyShip.getLife() + " %", Gdx.graphics.getWidth()-200, 75);
         game.font.getData().setScale(1,1);
     }
@@ -211,7 +194,7 @@ public class GameScreen implements Screen{
             if(bullet.getTexture() != null) game.batch.draw(bullet.getTexture(), bullet.getPosition().x, bullet.getPosition().y);
         }
         for(AlienDroppin alienDrop : alienDroppins){
-            if(alienDrop.getTexture() != null) game.batch.draw(alienDrop.getTexture(), alienDrop.getPosition().x, alienDrop.getPosition().y);
+            if(alienDrop.getTexture() != null) game.batch.draw(alienDrop.getTexture(), alienDrop.getPosition().x, alienDrop.getPosition().y, alienDrop.getPosition().getWidth(), alienDrop.getPosition().getHeight());
         }
         for(WShipAmmo wShipAmmo : wShipAmmos1){
             if(wShipAmmo.getTexture() != null) game.batch.draw(wShipAmmo.getTexture(), wShipAmmo.getPosition().x, wShipAmmo.getPosition().y);
@@ -223,9 +206,7 @@ public class GameScreen implements Screen{
 
     private void shipsDraw(){
         if(heroShip.isAlive()){
-            game.batch.setColor(heroShip.getColor());
             heroShip.spriteDraw(game.batch);
-            game.batch.setColor(Color.WHITE);
         }
         else {
             heroShip.dieHandle(game.batch);
@@ -233,9 +214,7 @@ public class GameScreen implements Screen{
         }
 
         for(EnemyShip ship: enemyShips){
-            game.batch.setColor(ship.getColor());
             ship.shipHandle(game.batch);
-            game.batch.setColor(Color.WHITE);
         }
     }
 

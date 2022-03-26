@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -19,7 +18,6 @@ public class CreditScreen implements Screen {
     OrthographicCamera camera;
     Texture background;
     TextButton returnButton;
-    Skin buttonSkin;
     Stage stage;
 
     public CreditScreen(final CaptainGoon game){
@@ -27,8 +25,7 @@ public class CreditScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture(Gdx.files.internal("backgrounds/293495.jpg"));
-        buttonSkin = new Skin(Gdx.files.internal("skin/commodore64/skin/uiskin.json"));
-        returnButton = new TextButton("Go back", buttonSkin);
+        returnButton = new TextButton("Go back", game.buttonSkin);
         stage = new Stage();
     }
 
@@ -62,7 +59,7 @@ public class CreditScreen implements Screen {
         game.font.getData().setScale(2f);
         game.font.draw(game.batch, "Music Credit", Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/4, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/10)+20);
         game.font.draw(game.batch, "Main menu - Composed by me", (Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/4)-130, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/7));
-        game.font.draw(game.batch, "Supercopter - JDG Youtube", (Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/4)-130, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/5));
+        game.font.draw(game.batch, "8Bit Music - fesliyanstudios.com", (Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/4)-130, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/5));
         game.font.draw(game.batch, "Win sound   - found on MixKit", (Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/4)-130, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/4)-10);
         game.font.draw(game.batch, "Lose sound   - found on MixKit", (Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/4)-130, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/3)+15);
 
@@ -100,6 +97,7 @@ public class CreditScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        stage.dispose();
     }
 }

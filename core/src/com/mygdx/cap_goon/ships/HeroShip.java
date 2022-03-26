@@ -25,36 +25,36 @@ public class HeroShip extends Ship{
 
         getPosition().x = Gdx.graphics.getWidth()/2 - 115/2;
         getPosition().y = 20;
-        getPosition().width = 100 * 9/10;
-        getPosition().height = 136 * 9/10;
-        bullets = new Array<Bullets>();
+        getPosition().width = getImage().getWidth() * 9/10;
+        getPosition().height = getImage().getHeight() * 9/10;
+        bullets = new Array<>();
 
     }
 
     public void spawnHeroAmmo(){
         if(isAlive()) {
             Bullets bullet = new Bullets();
-            bullet.getPosition().x = getPosition().x + 100 / 2;
-            bullet.getPosition().y = getPosition().y + 130;
-            bullet.getPosition().width = 10;
-            bullet.getPosition().height = 25;
+            bullet.getPosition().x = getPosition().x + getPosition().getWidth()/2 - bullet.getTexture().getWidth();
+            bullet.getPosition().y = getPosition().y + getPosition().getWidth();
+            bullet.getPosition().width = bullet.getTexture().getWidth();
+            bullet.getPosition().height = bullet.getTexture().getHeight();
             bullets.add(bullet);
-        } else return ;
+        }
     }
 
     public void mouseDeplacement(OrthographicCamera camera){
         Vector3 touchPos = new Vector3();
         touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(touchPos);
-        getPosition().x = (int) (touchPos.x - 100/2);
-        getPosition().y = (int) (touchPos.y - 100/2);
+        getPosition().x = (int) (touchPos.x - getPosition().getWidth()/2);
+        getPosition().y = (int) (touchPos.y - getPosition().getHeight()/2);
         positionTest();
     }
 
     public void positionTest(){
         if(getPosition().x < 0) getPosition().x = 0;
-        if(getPosition().x > Gdx.graphics.getWidth() - 100) getPosition().x = Gdx.graphics.getWidth()-100;
-        if(getPosition().y > 400 - 100) getPosition().y = 400 - 100;
+        if(getPosition().x > Gdx.graphics.getWidth() - getPosition().getWidth()) getPosition().x = Gdx.graphics.getWidth()-getPosition().getWidth();
+        if(getPosition().y > 300 - getPosition().getHeight()) getPosition().y = 300 - getPosition().getHeight();
         if(getPosition().y < 0) getPosition().y = 0;
     }
 

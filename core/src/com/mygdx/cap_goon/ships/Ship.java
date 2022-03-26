@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.cap_goon.ammunition.Ammunition;
 
 public abstract class Ship {
@@ -103,14 +104,14 @@ public abstract class Ship {
         explosion = new TextureAtlas(Gdx.files.internal("sprites/kisspng-sprite-explosion_pack/kisspng-sprite-explosion_pack.atlas"));
         animation = new Animation<TextureRegion>(1f/60f, explosion.getRegions());
         setAnimDuration(0);
-        color = new Color(255,255,255,1);
+        color = new Color(1,1,1,1);
     }
 
     public void getHitWith(Ammunition ammo) {
         int value = (getLife() - ammo.getDamage() <= 0) ? 0 : (getLife() - ammo.getDamage());
         setLife(value);
         if(!isColored){
-            color.sub(0, 1,1, 0);
+            color.sub(0, ammo.getDamage() / 100f, ammo.getDamage() / 100f, 0);
         }
     }
 
@@ -134,7 +135,9 @@ public abstract class Ship {
     }
 
     public void spriteDraw(SpriteBatch batch){
+        batch.setColor(color);
         batch.draw(getImage(), getPosition().x, getPosition().y, getPosition().width, getPosition().height);
+        batch.setColor(Color.WHITE);
     }
 
     public void dieHandle(SpriteBatch batch){

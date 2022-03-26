@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -85,7 +84,6 @@ public class MainMenuScreen implements Screen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) goLevel1Screen();
         if(Gdx.input.isKeyJustPressed(Input.Keys.C)) goCreditsScreen();
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) game.setScreen(new QuitGameScreen(this, game));
     }
 
@@ -126,5 +124,6 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         background.dispose();
         waitingMusic.dispose();
+        stage.dispose();
     }
 }

@@ -74,6 +74,7 @@ public class QuitGameScreen implements Screen {
     }
 
     public void exit(){
+        dispose();
         Gdx.app.exit();
     }
 
@@ -104,6 +105,6 @@ public class QuitGameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }
